@@ -13,6 +13,8 @@
 https://github.com/user-attachments/assets/5d34f792-62aa-4bdd-bc87-736896126135
 
 > 🎬 上面是本项目的宣传片（87 秒）——它本身也是用代码做的，没开过剪辑软件。
+>
+> 📺 用它做的 14 分钟实战成片：[《AI 建网站不再被平台拿捏：零基础搬上服务器》（视频号）](https://weixin.qq.com/sph/AyngTzgEvD)
 
 ## 它能做什么
 

@@ -13,6 +13,8 @@
 https://github.com/user-attachments/assets/5d34f792-62aa-4bdd-bc87-736896126135
 
 > 🎬 The project's promo video (87 s, narrated in Chinese) — made entirely in code, no video editor opened.
+>
+> 📺 A full 14-minute video made with it: [Moving an AI-built website onto your own server, step by step (WeChat Channels, in Chinese)](https://weixin.qq.com/sph/AyngTzgEvD)
 
 ## What it does
 
