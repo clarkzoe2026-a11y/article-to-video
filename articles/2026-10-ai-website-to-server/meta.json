@@ -1,0 +1,68 @@
+{
+  "title": "AI 建网站不再被平台拿捏：零基础搬上服务器",
+  "outro": {
+    "title": "AI 建网站不再被平台拿捏：零基础搬上服务器",
+    "subtitle": "10 步全流程 · 每步截图与命令",
+    "cover": "001",
+    "account": "漫行书海"
+  },
+  "chapters": [
+    {
+      "title": "网站成了平台的人质",
+      "scene": "e1_hook"
+    },
+    {
+      "title": "值不值得搬、要花多少钱",
+      "scene": "e1_who"
+    },
+    {
+      "title": "一图看懂 10 步",
+      "scene": "e1_map"
+    },
+    {
+      "title": "① 上传 GitHub",
+      "scene": "e1_step1_check"
+    },
+    {
+      "title": "② 买服务器",
+      "scene": "e1_step2_server"
+    },
+    {
+      "title": "③ 设置 DNS",
+      "scene": "e2_dns_concept"
+    },
+    {
+      "title": "④ 开放端口",
+      "scene": "e2_port_concept"
+    },
+    {
+      "title": "⑤ 进宝塔、装 Nginx",
+      "scene": "e2_baota_login"
+    },
+    {
+      "title": "⑥ 拉代码、构建",
+      "scene": "e3_clone_url"
+    },
+    {
+      "title": "⑦ PM2 守护",
+      "scene": "e3_pm2"
+    },
+    {
+      "title": "⑧ 站点 + 反向代理",
+      "scene": "e3_site"
+    },
+    {
+      "title": "⑨ HTTPS + 到期提醒",
+      "scene": "e4_ssl"
+    },
+    {
+      "title": "⑩ 以后怎么更新",
+      "scene": "e4_update"
+    },
+    {
+      "title": "回顾",
+      "scene": "e4_recap_all"
+    }
+  ],
+  "source": "https://mp.weixin.qq.com/s/6BJ8c999sDUaF4CkE9b84g"
+}

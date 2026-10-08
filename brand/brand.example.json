@@ -1,0 +1,9 @@
+{
+  "account": "你的公众号 / 频道名（显示在片尾卡片）",
+  "qr": "brand/qr.jpg",
+  "voices": {
+    "A": {"role": "主讲，懂行的朋友", "voice": "Callirrhoe"},
+    "B": {"role": "好奇的新手，替观众提问", "voice": "Puck"}
+  },
+  "style": "docs/STYLE.md"
+}

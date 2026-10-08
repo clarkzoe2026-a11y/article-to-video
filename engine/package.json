@@ -1,0 +1,12 @@
+{
+  "name": "article-to-video-engine",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Remotion 渲染引擎：读取某篇文章的 props.json + public 素材，渲染成知识讲解视频",
+  "dependencies": {
+    "@remotion/cli": "4.0.507",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "remotion": "4.0.507"
+  }
+}

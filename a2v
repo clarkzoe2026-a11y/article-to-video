@@ -1,0 +1,69 @@
+#!/bin/zsh
+# Article to Video —— 一条命令跑流水线的某一步。完整流程与人工关卡见 WORKFLOW.md
+set -e
+HERE="${0:A:h}"
+PY=${A2V_PYTHON:-$HERE/.venv/bin/python}  # install.sh 创建的环境（whisperx / PIL / scipy）；可用 A2V_PYTHON 覆盖
+[[ -x "$PY" ]] || { echo "找不到 Python 环境 $PY —— 请先运行 ./install.sh"; exit 1 }
+CHROME=${A2V_CHROME:-'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'}
+BROWSER=(); [[ -x "$CHROME" ]] && BROWSER=(--browser-executable "$CHROME")  # 没有 Chrome 时 Remotion 会自动下载自带浏览器
+cmd=$1; [[ $# -gt 0 ]] && shift
+dir() { [[ -n "$1" ]] || { echo "缺少文章目录，例如 articles/2026-10-xxx"; exit 1 }; echo "${1:A}"; }
+
+case "$cmd" in
+  new)      # 新建文章目录：./a2v new 2026-11-my-topic
+    D="$HERE/articles/$1"; [[ -e "$D" ]] && { echo "已存在：$D"; exit 1 }
+    mkdir -p "$D"/{source,script,build,public/img,public/audio,out}
+    [[ -f "$HERE/brand/qr.jpg" ]] && cp "$HERE/brand/qr.jpg" "$D/public/img/qr.jpg"
+    python3 - "$HERE" "$D" <<'PY'
+import json, sys, pathlib
+here, d = pathlib.Path(sys.argv[1]), pathlib.Path(sys.argv[2])
+b = json.loads((here / "brand/brand.json").read_text() if (here / "brand/brand.json").exists() else (here / "brand/brand.example.json").read_text())
+(d / "meta.json").write_text(json.dumps({"title": "", "source": "", "outro": {"title": "", "subtitle": "", "cover": "001", "account": b["account"]}, "chapters": []}, ensure_ascii=False, indent=2))
+(d / "script/storyboard.json").write_text(json.dumps({"title": "", "speakers": b["voices"], "scenes": []}, ensure_ascii=False, indent=2))
+PY
+    sed "s/{{SLUG}}/$1/g" "$HERE/docs/STATUS_TEMPLATE.md" > "$D/STATUS.md"
+    cp "$HERE/docs/shots_template.py" "$D/shots.py"
+    echo "已创建 $D" ;;
+  fetch)    $PY "$HERE/pipeline/fetch_article.py" "$(dir $1)" "$2" ;;
+  script)   $PY "$HERE/pipeline/script_md.py" "$(dir $1)" ;;
+  sample)   $PY "$HERE/pipeline/tts.py" "$(dir $1)" --sample "${2:-300}" ;;
+  voice)    D=$(dir $1); shift; $PY "$HERE/pipeline/tts.py" "$D" "$@"; $PY "$HERE/pipeline/align.py" "$D" 2>&1 | grep -E "^\[|写入|Error|Traceback"
+            $PY "$HERE/pipeline/voicecheck.py" "$D" 2>&1 | grep -v -i warn || echo "⚠️ 有疑似念错角色的句子（仅供参考，以人耳为准）；如需修正：整段重新生成，不拼接" ;;
+  align)    $PY "$HERE/pipeline/align.py" "$(dir $1)" 2>&1 | grep -E "^\[|写入|Error|Traceback" ;;
+  voicecheck) $PY "$HERE/pipeline/voicecheck.py" "$(dir $1)" 2>&1 | grep -v -i warn ;;
+  rolereview) $PY "$HERE/pipeline/role_review.py" "$(dir $1)" "${2:-B}" ;;
+  redboxes) $PY "$HERE/pipeline/redboxes.py" "$(dir $1)" ;;
+  contact)  $PY "$HERE/pipeline/contact.py" "$(dir $1)" "$2" "$3" ;;
+  shots)    D=$(dir $1); $PY "$D/shots.py" && $PY "$HERE/pipeline/bundle.py" "$D" && node "$HERE/pipeline/check_shots.mjs" "$D" ;;
+  render)   D=$(dir $1)
+            $PY "$D/shots.py" && $PY "$HERE/pipeline/bundle.py" "$D" && node "$HERE/pipeline/check_shots.mjs" "$D"
+            cd "$HERE/engine"
+            # 浏览器偶尔会截到整帧空白（随机，约 1/25000 帧）：渲染后扫描黑帧，有就自动重渲，最多 3 次
+            for try in 1 2 3; do
+              npx remotion render src/index.jsx Video "$D/out/video.mp4" --props="$D/build/props.json" --public-dir="$D/public" "${BROWSER[@]}" --log=error
+              if $PY "$HERE/pipeline/blackframes.py" "$D/out/video.mp4"; then echo "第 $try 次渲染：无黑帧"; break; fi
+              [[ $try == 3 ]] && { echo "连续 3 次有黑帧，请人工检查"; exit 1 }
+              echo "第 $try 次渲染有黑帧，自动重渲……"
+            done ;;
+  qa)       D=$(dir $1); cd "$HERE/engine" && A2V_PYTHON="$PY" node "$HERE/pipeline/review.mjs" "$D" ;;
+  chapters) $PY "$HERE/pipeline/chapters.py" "$(dir $1)" ;;
+  studio)   D=$(dir $1); cd "$HERE/engine" && npx remotion studio src/index.jsx --props="$D/build/props.json" --public-dir="$D/public" ;;
+  *) cat <<'USAGE'
+用法：./a2v <命令> <文章目录> [参数]
+  new <名字>              新建文章目录（articles/<名字>）
+  fetch <目录> <链接>     抓取文章正文和图片（飞书 / 公众号 / 本地 .md）
+  script <目录>           storyboard.json → script.md（给人审稿）          【关卡 1】
+  sample <目录> [字数]    生成开头试听段 public/audio/sample.wav             【关卡 2a】
+  voice <目录>            生成整片配音（1 次调用）+ 逐字对齐切分 + 角色核对    【关卡 2b】
+  voicecheck <目录>       逐句核对声音是否与标注角色一致（音高，仅供参考）
+  rolereview <目录> [B]   某角色全部台词合集 out/voice_B_review.wav，给人试听
+  redboxes <目录>         识别截图里作者标注的红框 → build/redboxes.json
+  contact <目录> <输出> <图号,图号>  带红框序号的缩略图墙，写画面安排时核对用
+  shots <目录>            画面安排 → props.json，并校验关键词
+  render <目录>           渲染 out/video.mp4 + 黑帧扫描
+  qa <目录>               逐帧抽查缩略图墙 out/review/                      【关卡 3】
+  chapters <目录>         视频平台分段章节 out/chapters.txt
+  studio <目录>           打开 Remotion Studio 实时预览
+USAGE
+  ;;
+esac

@@ -1,0 +1,13 @@
+.env
+*.env
+node_modules/
+__pycache__/
+.DS_Store
+.venv/
+dist/
+brand/brand.json
+brand/qr.jpg
+articles/*/source/
+articles/*/public/
+articles/*/out/
+articles/*/build/props.json
