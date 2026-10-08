@@ -1,6 +1,12 @@
+<div align="center">
+
 # article-to-video
 
-**简体中文** | [English](README.en.md)
+<a href="README.md"><img alt="简体中文" src="https://img.shields.io/badge/%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87-%E5%BD%93%E5%89%8D-DDFB78?style=for-the-badge"></a> <a href="README.en.md"><img alt="English" src="https://img.shields.io/badge/English-Switch-2E2E2E?style=for-the-badge"></a>
+
+<a href="LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-blue"></a> <img alt="Remotion" src="https://img.shields.io/badge/Remotion-4-0B84F3"> <img alt="Gemini TTS" src="https://img.shields.io/badge/Gemini-TTS-8E75B2"> <img alt="WhisperX" src="https://img.shields.io/badge/WhisperX-alignment-555555">
+
+</div>
 
 **让文章，被看见。** 把一篇图文文章，变成一支 16:9 的知识讲解视频：两个人的对话讲给观众听，你截图上的每一个红框、每一条命令，都在讲到它的那一秒出现。开源、免费、本地运行。
 
