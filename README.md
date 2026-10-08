@@ -4,7 +4,8 @@
 
 *Turn an illustrated article (Feishu / WeChat / Markdown) into a narrated explainer video: two-voice dialogue (Gemini TTS) + code-driven animation synced word-by-word to the narration (Remotion + WhisperX), with human review gates.*
 
-<!-- 宣传片（87 秒）：在 GitHub 网页编辑本文件时，把 promo_v3_readme.mp4 拖到这一行，替换成生成的视频链接 -->
+https://github.com/user-attachments/assets/5d34f792-62aa-4bdd-bc87-736896126135
+
 
 > 🎬 上面是本项目的宣传片（87 秒）——它本身也是用代码做的，没开过剪辑软件。
 
