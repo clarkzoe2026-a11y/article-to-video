@@ -1,11 +1,10 @@
 # article-to-video
 
+**简体中文** | [English](README.en.md)
+
 **让文章，被看见。** 把一篇图文文章，变成一支 16:9 的知识讲解视频：两个人的对话讲给观众听，你截图上的每一个红框、每一条命令，都在讲到它的那一秒出现。开源、免费、本地运行。
 
-*Turn an illustrated article (Feishu / WeChat / Markdown) into a narrated explainer video: two-voice dialogue (Gemini TTS) + code-driven animation synced word-by-word to the narration (Remotion + WhisperX), with human review gates.*
-
 https://github.com/user-attachments/assets/5d34f792-62aa-4bdd-bc87-736896126135
-
 
 > 🎬 上面是本项目的宣传片（87 秒）——它本身也是用代码做的，没开过剪辑软件。
 

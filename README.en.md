@@ -1,0 +1,72 @@
+# article-to-video
+
+[简体中文](README.md) | **English**
+
+**Let your articles be seen.** Turn an illustrated article into a 16:9 explainer video: two hosts talk your readers through it, and every red box on your screenshots and every command in your text appears on screen the moment it is mentioned. Open source, free, runs locally.
+
+https://github.com/user-attachments/assets/5d34f792-62aa-4bdd-bc87-736896126135
+
+> 🎬 The project's promo video (87 s, narrated in Chinese) — made entirely in code, no video editor opened.
+
+## What it does
+
+- **Two-voice dialogue narration**: a presenter (female) and a questioner (male) who asks the questions your viewers would ask. Uses the Gemini TTS free tier; the whole narration is generated in one call.
+- **The picture follows the narration**: WhisperX aligns the audio character by character; every visual change is bound to a keyword in the script and checked before rendering.
+- **Screenshots that explain themselves**: detects the red boxes you drew on your screenshots, shows the full image first, then zooms in and moves a cursor to click.
+- **And more**: commands typed out in a terminal, status-code cards, flow diagrams, big numbers, embedded video clips, an end card with your account.
+- **Three human review gates**: you approve the script, the voice and the final video before moving on; fix anything on the spot instead of starting over.
+- **Automatic QA**: black-frame scan (with automatic re-render), narration cut-point checks, and a contact sheet of every shot — checked before it reaches you.
+
+## Install
+
+Requirements: macOS or Linux, Node.js 18+, [uv](https://docs.astral.sh/uv/) (recommended) or Python 3.10–3.12, and a free [Gemini API key](https://aistudio.google.com/apikey).
+
+```bash
+git clone https://github.com/clarkzoe2026-a11y/article-to-video.git
+cd article-to-video
+./install.sh
+```
+
+`install.sh` installs the render engine, the Python environment (WhisperX, about 2–3 GB on first run) and sentence-splitting data, then asks for your Gemini key and the account name shown on the end card. Safe to re-run.
+
+## 5 steps from article to video
+
+```bash
+./a2v new 2026-11-my-topic
+./a2v fetch articles/2026-11-my-topic <Feishu doc / WeChat article URL>
+```
+
+Then ask your AI coding assistant (Claude Code, Codex, Cursor, …) to read `WORKFLOW.md` and follow it for this article:
+
+1. **Fetch the article** (`./a2v fetch`): text and screenshots, downloaded together.
+2. **Write the script**: the article rewritten as a two-person dialogue → **you review it** (gate 1).
+3. **Generate the voice** (`./a2v voice`): listen to a 1-minute sample, then the full dialogue is voiced in one go → **you listen to it** (gate 2).
+4. **Arrange the shots** (`./a2v shots`): whichever screenshot is being discussed, zoom into its red box.
+5. **Render** (`./a2v render`): automatic checks, one command to the final video → **you watch it** (gate 3).
+
+It can also generate chapter markers for video platforms (`./a2v chapters`). Prefer to do it by hand? All commands are listed by `./a2v`.
+
+> **Language note**: the narration prompts, the voices and the workflow docs (`WORKFLOW.md`, `docs/`) are written and tuned for Mandarin Chinese videos. AI coding assistants read them fine; for other languages you would adapt the script guide and the TTS style prompts.
+
+## Layout
+
+| Path | Contents |
+|---|---|
+| `WORKFLOW.md` | The workflow handbook (your AI assistant starts here) |
+| `docs/` | Script guide, shot guide, visual style, promo design language, lessons learned |
+| `a2v` / `install.sh` | Command entry point / one-step install |
+| `engine/` | Remotion render engine (explainer template + the promo's bespoke animation) |
+| `pipeline/` | Fetching, voice, alignment, red-box detection, shot validation, QA |
+| `articles/` | Examples: a 14-minute hands-on video and this project's promo — scripts and shot plans only (no original images, voice or music) |
+
+## Cost
+
+The Gemini TTS free tier allows 10 calls a day; one video usually needs 2 (a sample plus the full narration). Everything else runs locally for free.
+
+## Author
+
+WeChat Official Account **漫行书海** — hands-on AI workflows.
+
+## License
+
+[MIT](LICENSE)
