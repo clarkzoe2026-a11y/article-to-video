@@ -8,6 +8,10 @@ dist/
 brand/brand.json
 brand/qr.jpg
 articles/*/source/
-articles/*/public/
+articles/*/public/**/*.png
+articles/*/public/**/*.jpg
+articles/*/public/**/*.wav
+articles/*/public/**/*.mp3
+articles/*/public/**/*.mp4
 articles/*/out/
 articles/*/build/props.json
