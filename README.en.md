@@ -8,7 +8,7 @@
 
 </div>
 
-**Let your articles be seen.** Turn an illustrated article into a 16:9 explainer video: two hosts talk your readers through it, and every red box on your screenshots and every command in your text appears on screen the moment it is mentioned. Open source, free, runs locally.
+**Let your articles be seen.** Turn an illustrated article into a 16:9 explainer video: two hosts talk your readers through it, and every red box on your screenshots and every command in your text appears on screen the moment it is mentioned. Open source, free, runs locally (Mac / Linux) — one message in Claude Code, Codex, Cursor, WorkBuddy or another AI coding assistant.
 
 https://github.com/user-attachments/assets/5d34f792-62aa-4bdd-bc87-736896126135
 
@@ -25,47 +25,17 @@ https://github.com/user-attachments/assets/5d34f792-62aa-4bdd-bc87-736896126135
 - **Three human review gates**: you approve the script, the voice and the final video before moving on; fix anything on the spot instead of starting over.
 - **Automatic QA**: black-frame scan (with automatic re-render), narration cut-point checks, and a contact sheet of every shot — checked before it reaches you.
 
-## Quick start: 3 steps
+## Quick start
 
-### Step 1: get two things
+### Step 1: install (once)
 
-| You need | How to get it |
-|---|---|
-| **An AI coding assistant** | [Claude Code](https://claude.com/claude-code), [Codex](https://github.com/openai/codex), [Cursor](https://cursor.com), [WorkBuddy](https://www.workbuddy.ai), etc. — installed and signed in. It must be able to run commands and read/write files on your computer (for WorkBuddy, use Craft mode) |
-| **A Gemini API key** (free, for the voice) | Sign in to [Google AI Studio](https://aistudio.google.com/apikey) with a Google account, click **Create API key**, and keep it somewhere safe |
-
-You'll need a Mac or Linux computer (Windows isn't supported yet) with [Node.js](https://nodejs.org) 18 or newer. If it's missing, the assistant will tell you how to install it.
-
-### Step 2: send this to your AI coding assistant
-
-Open your AI coding assistant, copy this, put your article in the angle brackets, and send it:
+Have a voice API ready: this project uses a **Gemini API key (free tier)** — [get one here](https://aistudio.google.com/apikey). Then send this to your AI coding assistant:
 
 ```text
 Download and install https://github.com/clarkzoe2026-a11y/article-to-video
-then follow its WORKFLOW.md to turn this article into a video:
-<article URL or path to a .md file>
 ```
 
-It downloads and installs everything (a few minutes the first time) and starts making the video. For your next video, send the same message with the new article.
-
-Two things you'll do yourself along the way:
-
-- **Enter your Gemini key**: the assistant will tell you how. Don't paste the key into the chat.
-- **Allow internet access**: when the assistant asks to go online, allow it. On WorkBuddy, use Craft mode.
-
-Articles you can use: Feishu (Lark) docs, WeChat Official Account articles, other web articles (any language), local Markdown files. For sites that can't be fetched (e.g. Medium, Zhihu), save the article as Markdown and use that.
-
-### Step 3: approve at three gates
-
-The assistant works through the steps by itself and only stops at three points for you:
-
-| Gate | What you do |
-|---|---|
-| ① Script | Read it, reply "approved", or say which lines to change |
-| ② Voice | Listen to a 1-minute sample, then the full narration; reply "approved" when happy |
-| ③ Video | Check the contact sheet and the full video; reply "approved" when happy |
-
-Your video ends up in `articles/<article folder>/out/video.mp4`.
+The assistant downloads and installs everything. You only do two things: enter your key when asked (never in the chat) and allow internet access when asked.
 
 <details>
 <summary><b>Prefer to install it yourself?</b> (click to expand)</summary>
@@ -83,6 +53,26 @@ The installer asks you to paste your Gemini key (nothing shows while you paste �
 About 3 GB of disk: render engine ~0.5 GB, Python environment ~1 GB, plus a Chinese speech-alignment model (~1.3 GB) downloaded automatically the first time you generate a voice. It works out the timing of every character so the picture follows the narration — entirely on your machine.
 
 </details>
+
+### Step 2: make a video
+
+Send this to your AI coding assistant, with your article in the angle brackets (in a new conversation, open the `article-to-video` folder in your assistant first):
+
+```text
+Follow WORKFLOW.md and turn this article into a video: <article URL or path to a .md file>
+```
+
+Articles you can use: Feishu (Lark) docs, WeChat articles, other web articles (any language), local Markdown files. For sites that can't be fetched (e.g. Medium, Zhihu), save the article as Markdown first.
+
+The assistant works through the steps by itself and only stops at three gates for you:
+
+| Gate | What you do |
+|---|---|
+| ① Script | Read it, reply "approved", or say which lines to change |
+| ② Voice | Listen to a 1-minute sample, then the full narration; reply "approved" when happy |
+| ③ Video | Check the contact sheet and the full video; reply "approved" when happy |
+
+Your video ends up in `articles/<article folder>/out/video.mp4`.
 
 ## How it works (5 steps)
 
