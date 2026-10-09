@@ -39,12 +39,13 @@ cd article-to-video
 
 ## 5 steps from article to video
 
-```bash
-./a2v new 2026-11-my-topic
-./a2v fetch articles/2026-11-my-topic <article URL or .md file>
+**The easy way**: after installing, open your AI coding assistant (Claude Code, Codex, Cursor, …) in the project folder and send it this line, with your article in the angle brackets:
+
+```text
+Follow WORKFLOW.md and turn this article into a video: <article URL or path to a .md file>
 ```
 
-Then ask your AI coding assistant (Claude Code, Codex, Cursor, …) to read `WORKFLOW.md` and follow it for this article:
+It creates the article folder, fetches the article, then walks through the 5 steps below and stops at the three review gates for you. Fetching and voice generation need internet access — if your assistant blocks the network by default (e.g. Codex's default sandbox), allow it.
 
 1. **Fetch the article** (`./a2v fetch`): text and screenshots, downloaded together. Sources:
    - **Feishu (Lark) docs**: sharpest images (log in with Feishu's official CLI `lark-cli` first)
@@ -56,7 +57,14 @@ Then ask your AI coding assistant (Claude Code, Codex, Cursor, …) to read `WOR
 4. **Arrange the shots** (`./a2v shots`): whichever screenshot is being discussed, zoom into its red box.
 5. **Render** (`./a2v render`): automatic checks, one command to the final video → **you watch it** (gate 3).
 
-It can also generate chapter markers for video platforms (`./a2v chapters`). Prefer to do it by hand? All commands are listed by `./a2v`.
+It can also generate chapter markers for video platforms (`./a2v chapters`).
+
+**Prefer to run the commands yourself?** Start with these two; `./a2v` lists them all:
+
+```bash
+./a2v new 2026-11-my-topic
+./a2v fetch articles/2026-11-my-topic <article URL or .md file>
+```
 
 > **Language note**: the narration prompts, the voices and the workflow docs (`WORKFLOW.md`, `docs/`) are written and tuned for Mandarin Chinese videos. AI coding assistants read them fine; for other languages you would adapt the script guide and the TTS style prompts.
 
