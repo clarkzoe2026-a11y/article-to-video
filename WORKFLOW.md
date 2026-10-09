@@ -41,10 +41,12 @@
 
 ```bash
 ./a2v new 2026-11-my-topic
-./a2v fetch articles/2026-11-my-topic <飞书链接|公众号链接|本地.md>
+./a2v fetch articles/2026-11-my-topic <飞书链接|公众号链接|其他网页文章链接|本地.md>
 ```
 
 - **优先用飞书链接**：能拿到高清原图（实测最宽 2880px），公众号最宽只有 1080px，局部放大会糊。
+- **其他网页**（个人博客、CSDN、少数派、GitHub Blog、Substack、Wikipedia……）：按「阅读模式」算法提取正文和图片。知乎、Medium 等会拒绝访问（403），需要登录或正文靠脚本显示的页面也抓不全——这时让用户把文章另存为 Markdown（图片放同一文件夹），用 `./a2v fetch <目录> 文章.md` 导入，文中引用的图片会一起导入。
+- 外文文章也能抓；口播稿按 `docs/SCRIPT_GUIDE.md` 写成中文对话（相当于中文讲解外文文章）。
 - 产出：`source/article.md`、`source/images/`、`public/img/NNN.png`（编号与文中顺序一致）。
 - 截图里的隐私信息（IP、账号、手机号）先检查：作者通常已打码，没打码的要提醒用户。
 

@@ -51,7 +51,7 @@ PY
   *) cat <<'USAGE'
 用法：./a2v <命令> <文章目录> [参数]
   new <名字>              新建文章目录（articles/<名字>）
-  fetch <目录> <链接>     抓取文章正文和图片（飞书 / 公众号 / 本地 .md）
+  fetch <目录> <链接>     抓取文章正文和图片（飞书 / 公众号 / 其他网页 / 本地 .md）
   script <目录>           storyboard.json → script.md（给人审稿）          【关卡 1】
   sample <目录> [字数]    生成开头试听段 public/audio/sample.wav             【关卡 2a】
   voice <目录>            生成整片配音（1 次调用）+ 逐字对齐切分 + 角色核对    【关卡 2b】

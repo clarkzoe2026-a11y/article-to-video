@@ -16,7 +16,7 @@ echo "Node $(node -v) ✓"
 say "2/5 安装渲染引擎依赖（Remotion）"
 (cd engine && npm install --no-audit --no-fund)
 
-say "3/5 创建 Python 环境 .venv（WhisperX 等，首次约 2–3 GB，需要几分钟）"
+say "3/5 创建 Python 环境 .venv（PyTorch + WhisperX 等，约 1 GB，需要几分钟）"
 if [ ! -x .venv/bin/python ]; then
   if command -v uv >/dev/null; then
     uv venv -q -p 3.12 .venv
@@ -72,6 +72,7 @@ say "安装完成 🎉"
 cat <<'MSG'
 下一步：
   ./a2v new 2026-11-my-topic                       # 新建一篇
-  ./a2v fetch articles/2026-11-my-topic <文章链接>  # 抓取正文和图片
+  ./a2v fetch articles/2026-11-my-topic <文章链接或 .md 文件>  # 抓取正文和图片
+第一次生成配音时，还会自动下载约 1.3 GB 的中文语音对齐模型（只下载一次）。
 然后把 WORKFLOW.md 交给你的 AI 助手（Claude Code / Codex …），说「按 Article to Video 流程做这篇」。
 MSG

@@ -35,18 +35,22 @@ cd article-to-video
 ./install.sh
 ```
 
-`install.sh` 会装好渲染引擎、Python 环境（WhisperX，首次约 2–3 GB）、分句数据，并引导你填 Gemini Key 和片尾显示的公众号名。可重复运行。
+`install.sh` 会装好渲染引擎（约 0.5 GB）、Python 环境（PyTorch + WhisperX，约 1 GB）、分句数据，并引导你填 Gemini Key 和片尾显示的公众号名。可重复运行。第一次生成配音时，还会自动下载约 1.3 GB 的中文语音对齐模型（只下载一次）——它负责算出每个字在第几秒，让画面逐字跟着口播走，全部在本机运行。合计约 3 GB 磁盘空间。
 
 ## 5 步，文章变视频
 
 ```bash
 ./a2v new 2026-11-my-topic
-./a2v fetch articles/2026-11-my-topic <飞书文档 / 公众号文章链接>
+./a2v fetch articles/2026-11-my-topic <文章链接或 .md 文件>
 ```
 
 然后让你的 AI 编程助手（Claude Code、Codex、Cursor……）读 `WORKFLOW.md`，按流程做这篇文章：
 
-1. **抓取文章**（`./a2v fetch`）：正文和截图一起拿下来。
+1. **抓取文章**（`./a2v fetch`）：正文和截图一起拿下来。支持：
+   - **飞书文档**：图片最清晰（需先登录飞书官方命令行工具 `lark-cli`）
+   - **微信公众号文章**
+   - **其他网页文章**：个人博客、CSDN、少数派、GitHub Blog、Substack、Wikipedia 等，外文文章也可以
+   - **本地 Markdown / 文本文件**：文中引用的图片会一起导入。知乎、Medium 这类拒绝自动访问或需要登录的网站，把文章另存为 Markdown 再导入
 2. **口播脚本**：把文章改写成两个人的对话 → **你审稿**（关卡 1）。
 3. **生成配音**（`./a2v voice`）：先听 1 分钟试听段，再整段对话一次配好 → **你听整片**（关卡 2）。
 4. **安排画面**（`./a2v shots`）：讲到哪张截图，就推近哪个红框。

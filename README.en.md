@@ -35,18 +35,22 @@ cd article-to-video
 ./install.sh
 ```
 
-`install.sh` installs the render engine, the Python environment (WhisperX, about 2–3 GB on first run) and sentence-splitting data, then asks for your Gemini key and the account name shown on the end card. Safe to re-run.
+`install.sh` installs the render engine (about 0.5 GB), the Python environment (PyTorch + WhisperX, about 1 GB) and sentence-splitting data, then asks for your Gemini key and the account name shown on the end card. Safe to re-run. The first time you generate a voice, it also downloads a Chinese speech-alignment model (about 1.3 GB, once) — it works out the timing of every character so the picture can follow the narration, entirely on your machine. About 3 GB of disk in total.
 
 ## 5 steps from article to video
 
 ```bash
 ./a2v new 2026-11-my-topic
-./a2v fetch articles/2026-11-my-topic <Feishu doc / WeChat article URL>
+./a2v fetch articles/2026-11-my-topic <article URL or .md file>
 ```
 
 Then ask your AI coding assistant (Claude Code, Codex, Cursor, …) to read `WORKFLOW.md` and follow it for this article:
 
-1. **Fetch the article** (`./a2v fetch`): text and screenshots, downloaded together.
+1. **Fetch the article** (`./a2v fetch`): text and screenshots, downloaded together. Sources:
+   - **Feishu (Lark) docs**: sharpest images (log in with Feishu's official CLI `lark-cli` first)
+   - **WeChat Official Account articles**
+   - **Other web articles**: personal blogs, GitHub Blog, Substack, Wikipedia, dev.to, CSDN, Sspai…
+   - **Local Markdown / text files**, with the images they reference. For sites that block automated access or need a login (e.g. Medium, Zhihu), save the article as Markdown and import that.
 2. **Write the script**: the article rewritten as a two-person dialogue → **you review it** (gate 1).
 3. **Generate the voice** (`./a2v voice`): listen to a 1-minute sample, then the full dialogue is voiced in one go → **you listen to it** (gate 2).
 4. **Arrange the shots** (`./a2v shots`): whichever screenshot is being discussed, zoom into its red box.
