@@ -41,7 +41,7 @@
 
 用户可能只发了一句「帮我下载并安装 <本仓库地址>，然后……把这篇文章做成视频」。按顺序做：
 
-1. **下载**：当前目录还没有本项目时，`git clone` 本仓库并进入目录（macOS 第一次用 git 会弹窗装开发者工具，请用户点「安装」后再试）。
+1. **下载**：当前目录就是本项目 → 直接用；当前目录下已有 `article-to-video/` → 进入它；都没有 → `git clone` 本仓库（会自动新建 `article-to-video/` 文件夹）并进入。macOS 第一次用 git 会弹窗装开发者工具，请用户点「安装」后再试。
 2. **检查**：`node -v`（需 18+）、有没有 `uv`（或 Python 3.10–3.12）、`.venv/bin/python`、`engine/node_modules`、`.env` 里有没有非空的 `GEMINI_API_KEY`（只判断有无，**不打印**）。
 3. **缺 Node.js**：请用户到 https://nodejs.org 下载安装包（已有 Homebrew 的可以 `brew install node`）；不要用 `sudo`，也不要替用户输入电脑密码。
 4. **缺 uv 且没有合适的 Python**：可以运行官方脚本 `curl -LsSf https://astral.sh/uv/install.sh | sh`（装在用户目录，不需要密码），装完用 `~/.local/bin/uv` 或重开终端。

@@ -38,7 +38,7 @@ You'll need a Mac or Linux computer (Windows isn't supported yet) with [Node.js]
 
 ### Step 2: send one line to your AI coding assistant
 
-Create an empty folder (e.g. "video-studio"), open it in your AI coding assistant, then copy this line, put your article in the angle brackets, and send it:
+Open your AI coding assistant in any folder where you'd like the project to live (e.g. Documents), then copy this, put your article in the angle brackets, and send it:
 
 ```text
 Download and install https://github.com/clarkzoe2026-a11y/article-to-video
@@ -46,7 +46,7 @@ then follow its WORKFLOW.md to turn this article into a video:
 <article URL or path to a .md file>
 ```
 
-The assistant downloads and installs everything (a few minutes the first time, about 3 GB of disk) and starts making the video. Two things it will ask you to do yourself:
+The assistant creates an `article-to-video` folder there, downloads and installs everything (a few minutes the first time, about 3 GB of disk), and starts making the video. Two things it will ask you to do yourself:
 
 - **Enter your Gemini key**: it asks you to run one command in your own Terminal and paste the key there. **Don't paste the key into the chat** — it stays only on your computer.
 - **Allow internet access**: fetching, installing and voice generation need the network. If your assistant blocks it by default (e.g. Codex's default sandbox), allow it. For WorkBuddy, use Craft mode (Ask mode only chats).
