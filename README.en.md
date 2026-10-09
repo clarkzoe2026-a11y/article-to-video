@@ -32,7 +32,9 @@ You'll need a Mac or Linux computer (Windows isn't supported yet) with [Node.js]
 Create an empty folder (e.g. "video-studio"), open it in your AI coding assistant, then copy this line, put your article in the angle brackets, and send it:
 
 ```text
-Download and install https://github.com/clarkzoe2026-a11y/article-to-video, then follow its WORKFLOW.md to turn this article into a video: <article URL or path to a .md file>
+Download and install https://github.com/clarkzoe2026-a11y/article-to-video
+then follow its WORKFLOW.md to turn this article into a video:
+<article URL or path to a .md file>
 ```
 
 The assistant downloads and installs everything (a few minutes the first time, about 3 GB of disk) and starts making the video. Two things it will ask you to do yourself:

@@ -32,7 +32,8 @@ https://github.com/user-attachments/assets/5d34f792-62aa-4bdd-bc87-736896126135
 在电脑上新建一个空文件夹（比如「视频工作室」），用 AI 编程助手打开它，复制下面这句话发给它，把尖括号换成你的文章：
 
 ```text
-帮我下载并安装 https://github.com/clarkzoe2026-a11y/article-to-video ，然后按它的 WORKFLOW.md 流程，把这篇文章做成视频：<文章链接或 .md 文件路径>
+帮我下载并安装 https://github.com/clarkzoe2026-a11y/article-to-video
+然后按它的 WORKFLOW.md 流程，把这篇文章做成视频：<文章链接或 .md 文件路径>
 ```
 
 助手会自己下载、安装（首次几分钟，约占 3 GB 空间），然后开始做视频。中途有两件事要你亲手做：
