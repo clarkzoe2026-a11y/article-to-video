@@ -16,13 +16,22 @@ https://github.com/user-attachments/assets/5d34f792-62aa-4bdd-bc87-736896126135
 >
 > 📺 A full 14-minute video made with it: [Moving an AI-built website onto your own server, step by step (WeChat Channels, in Chinese)](https://weixin.qq.com/sph/AyngTzgEvD)
 
+## What it does
+
+- **Two-voice dialogue narration**: a presenter (female) and a questioner (male) who asks the questions your viewers would ask. Uses the Gemini TTS free tier; the whole narration is generated in one call.
+- **The picture follows the narration**: WhisperX aligns the audio character by character; every visual change is bound to a keyword in the script and checked before rendering.
+- **Screenshots that explain themselves**: detects the red boxes you drew on your screenshots, shows the full image first, then zooms in and moves a cursor to click.
+- **And more**: commands typed out in a terminal, status-code cards, flow diagrams, big numbers, embedded video clips, an end card with your account.
+- **Three human review gates**: you approve the script, the voice and the final video before moving on; fix anything on the spot instead of starting over.
+- **Automatic QA**: black-frame scan (with automatic re-render), narration cut-point checks, and a contact sheet of every shot — checked before it reaches you.
+
 ## Quick start: 3 steps
 
 ### Step 1: get two things
 
 | You need | How to get it |
 |---|---|
-| **An AI coding assistant** | Any of [Claude Code](https://claude.com/claude-code), [Codex](https://github.com/openai/codex), [Cursor](https://cursor.com) — installed and signed in |
+| **An AI coding assistant** | [Claude Code](https://claude.com/claude-code), [Codex](https://github.com/openai/codex), [Cursor](https://cursor.com), [WorkBuddy](https://www.workbuddy.ai), etc. — installed and signed in. It must be able to run commands and read/write files on your computer (for WorkBuddy, use Craft mode) |
 | **A Gemini API key** (free, for the voice) | Sign in to [Google AI Studio](https://aistudio.google.com/apikey) with a Google account, click **Create API key**, and keep it somewhere safe |
 
 You'll need a Mac or Linux computer (Windows isn't supported yet) with [Node.js](https://nodejs.org) 18 or newer. If it's missing, the assistant will tell you how to install it.
@@ -40,7 +49,7 @@ then follow its WORKFLOW.md to turn this article into a video:
 The assistant downloads and installs everything (a few minutes the first time, about 3 GB of disk) and starts making the video. Two things it will ask you to do yourself:
 
 - **Enter your Gemini key**: it asks you to run one command in your own Terminal and paste the key there. **Don't paste the key into the chat** — it stays only on your computer.
-- **Allow internet access**: fetching, installing and voice generation need the network. If your assistant blocks it by default (e.g. Codex's default sandbox), allow it.
+- **Allow internet access**: fetching, installing and voice generation need the network. If your assistant blocks it by default (e.g. Codex's default sandbox), allow it. For WorkBuddy, use Craft mode (Ask mode only chats).
 
 Articles you can use:
 
@@ -83,15 +92,6 @@ The installer asks you to paste your Gemini key (nothing shows while you paste �
 About 3 GB of disk: render engine ~0.5 GB, Python environment ~1 GB, plus a Chinese speech-alignment model (~1.3 GB) downloaded automatically the first time you generate a voice. It works out the timing of every character so the picture follows the narration — entirely on your machine.
 
 </details>
-
-## What it does
-
-- **Two-voice dialogue narration**: a presenter (female) and a questioner (male) who asks the questions your viewers would ask. Uses the Gemini TTS free tier; the whole narration is generated in one call.
-- **The picture follows the narration**: WhisperX aligns the audio character by character; every visual change is bound to a keyword in the script and checked before rendering.
-- **Screenshots that explain themselves**: detects the red boxes you drew on your screenshots, shows the full image first, then zooms in and moves a cursor to click.
-- **And more**: commands typed out in a terminal, status-code cards, flow diagrams, big numbers, embedded video clips, an end card with your account.
-- **Three human review gates**: you approve the script, the voice and the final video before moving on; fix anything on the spot instead of starting over.
-- **Automatic QA**: black-frame scan (with automatic re-render), narration cut-point checks, and a contact sheet of every shot — checked before it reaches you.
 
 ## How it works (5 steps)
 
