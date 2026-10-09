@@ -36,9 +36,9 @@ https://github.com/user-attachments/assets/5d34f792-62aa-4bdd-bc87-736896126135
 
 You'll need a Mac or Linux computer (Windows isn't supported yet) with [Node.js](https://nodejs.org) 18 or newer. If it's missing, the assistant will tell you how to install it.
 
-### Step 2: send one line to your AI coding assistant
+### Step 2: send this to your AI coding assistant
 
-Open your AI coding assistant in any folder where you'd like the project to live (e.g. Documents), then copy this, put your article in the angle brackets, and send it:
+Open your AI coding assistant, copy this, put your article in the angle brackets, and send it:
 
 ```text
 Download and install https://github.com/clarkzoe2026-a11y/article-to-video
@@ -46,23 +46,14 @@ then follow its WORKFLOW.md to turn this article into a video:
 <article URL or path to a .md file>
 ```
 
-The assistant creates an `article-to-video` folder there, downloads and installs everything (a few minutes the first time, about 3 GB of disk), and starts making the video. Two things it will ask you to do yourself:
+It downloads and installs everything (a few minutes the first time) and starts making the video. For your next video, send the same message with the new article.
 
-- **Enter your Gemini key**: it asks you to run one command in your own Terminal and paste the key there. **Don't paste the key into the chat** — it stays only on your computer.
-- **Allow internet access**: fetching, installing and voice generation need the network. If your assistant blocks it by default (e.g. Codex's default sandbox), allow it. For WorkBuddy, use Craft mode (Ask mode only chats).
+Two things you'll do yourself along the way:
 
-Articles you can use:
+- **Enter your Gemini key**: the assistant will tell you how. Don't paste the key into the chat.
+- **Allow internet access**: when the assistant asks to go online, allow it. On WorkBuddy, use Craft mode.
 
-- **Feishu (Lark) docs**: sharpest images (log in with Feishu's official CLI `lark-cli` first)
-- **WeChat Official Account articles**
-- **Other web articles**: personal blogs, GitHub Blog, Substack, Wikipedia, dev.to, CSDN, Sspai… (any language)
-- **Local Markdown / text files**, with the images they reference. For sites that block automated access or need a login (e.g. Medium, Zhihu), save the article as Markdown and use that
-
-Next time, just open the `article-to-video` folder in your assistant and send:
-
-```text
-Follow WORKFLOW.md and turn this article into a video: <article URL or path to a .md file>
-```
+Articles you can use: Feishu (Lark) docs, WeChat Official Account articles, other web articles (any language), local Markdown files. For sites that can't be fetched (e.g. Medium, Zhihu), save the article as Markdown and use that.
 
 ### Step 3: approve at three gates
 
