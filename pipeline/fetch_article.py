@@ -71,7 +71,7 @@ def fetch_wechat(url):
     req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 (Macintosh) AppleWebKit/537.36 Chrome/128 Safari/537.36"})
     page = urllib.request.urlopen(req, timeout=30).read().decode("utf-8", "ignore")
     title = re.search(r"<h1[^>]*>(.*?)</h1>", page, re.S)
-    body = re.search(r'id="js_content"(.*?)</div>\s*<script', page, re.S)
+    body = re.search(r'id="js_content"[^>]*>(.*?)</div>\s*<script', page, re.S)  # 跳过该标签剩余属性（如 style="visibility: hidden"）
     if not body:
         sys.exit("没找到公众号正文（链接是否需要登录/已被删除？）")
     body = body.group(1)

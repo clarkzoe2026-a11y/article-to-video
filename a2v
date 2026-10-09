@@ -18,7 +18,7 @@ case "$cmd" in
 import json, sys, pathlib
 here, d = pathlib.Path(sys.argv[1]), pathlib.Path(sys.argv[2])
 b = json.loads((here / "brand/brand.json").read_text() if (here / "brand/brand.json").exists() else (here / "brand/brand.example.json").read_text())
-(d / "meta.json").write_text(json.dumps({"title": "", "source": "", "outro": {"title": "", "subtitle": "", "cover": "001", "account": b["account"]}, "chapters": []}, ensure_ascii=False, indent=2))
+(d / "meta.json").write_text(json.dumps({"title": "", "source": "", "outro": {"title": "", "subtitle": "", "cover": "001", "account": "" if "（" in b["account"] else b["account"]}, "chapters": []}, ensure_ascii=False, indent=2))
 (d / "script/storyboard.json").write_text(json.dumps({"title": "", "speakers": b["voices"], "scenes": []}, ensure_ascii=False, indent=2))
 PY
     sed "s/{{SLUG}}/$1/g" "$HERE/docs/STATUS_TEMPLATE.md" > "$D/STATUS.md"

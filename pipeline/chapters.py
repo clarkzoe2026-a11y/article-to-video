@@ -13,6 +13,8 @@ start, t = {}, 0.0
 for s in scenes:  # 与引擎一致：每个镜头按帧取整后首尾相接
     start[s["id"]] = t
     t += round(s["duration"] * FPS) / FPS
+if not chapters:
+    sys.exit("meta.json 里还没有 chapters（[{\"title\": \"章节名\", \"scene\": \"起始镜头 id\"}, …]），先写好再生成")
 lines = []
 for c in chapters:
     sec = int(start[c["scene"]])

@@ -370,7 +370,7 @@ const OutroCard = ({p}) => (
               <Img src={staticFile(META.qr)} style={{width: '100%', height: '100%', display: 'block'}} />
             </div>
           )}
-          <div style={{fontSize: 30, color: C.sub, lineHeight: 1.6}}>微信扫码或搜索公众号<br /><b style={{color: C.orange, fontSize: 44, fontFamily: SERIF}}>{META.account}</b></div>
+          {META.account && <div style={{fontSize: 30, color: C.sub, lineHeight: 1.6}}>{META.qr ? '微信扫码或搜索公众号' : '搜索公众号'}<br /><b style={{color: C.orange, fontSize: 44, fontFamily: SERIF}}>{META.account}</b></div>}
         </div>
       </div>
     </div>

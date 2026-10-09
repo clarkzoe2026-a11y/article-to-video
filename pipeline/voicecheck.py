@@ -55,7 +55,10 @@ def main():
     for s in scenes:
         x = read(AUDIO / f"{s['id']}.wav")
         for i, l in enumerate(s["lines"]):
-            seg = x[int(l["start"] * SR):int(l["end"] * SR)]
+            seg = x[int(l["start"] * SR):min(len(x), int(l["end"] * SR))]
+            if len(seg) < int(0.15 * SR):  # 对齐偏差让这句几乎落在镜头音频之外：跳过，不影响其他句子
+                print(f"⚠ {s['id']} 第{i}句对齐过短，跳过音色核对：{l['text']}")
+                continue
             f = f0_track(seg)
             rows.append({"scene": s["id"], "line": i, "who": l["who"], "text": l["text"],
                          "f0": round(float(np.median(f)), 1) if len(f) >= 5 else None, "voiced": int(len(f))})
@@ -67,7 +70,9 @@ def main():
     for s in scenes:
         x = read(AUDIO / f"{s['id']}.wav")
         for l in s["lines"]:
-            seg = torch.from_numpy(x[int(l["start"] * SR):int(l["end"] * SR)].copy())
+            if not any(r["scene"] == s["id"] and r["text"] == l["text"] for r in rows):
+                continue
+            seg = torch.from_numpy(x[int(l["start"] * SR):min(len(x), int(l["end"] * SR))].copy())
             m = MFCC(seg.unsqueeze(0))[0].numpy()
             feats.append(np.concatenate([m.mean(1), m.std(1)]))
     X = np.array(feats)
