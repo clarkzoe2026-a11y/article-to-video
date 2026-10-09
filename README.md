@@ -16,6 +16,72 @@ https://github.com/user-attachments/assets/5d34f792-62aa-4bdd-bc87-736896126135
 >
 > 📺 用它做的 14 分钟实战成片：[《AI 建网站不再被平台拿捏：零基础搬上服务器》（视频号）](https://weixin.qq.com/sph/AyngTzgEvD)
 
+## 快速开始：3 步
+
+### 第 1 步：准备两样东西
+
+| 需要 | 怎么获得 |
+|---|---|
+| **一个 AI 编程助手** | [Claude Code](https://claude.com/claude-code)、[Codex](https://github.com/openai/codex)、[Cursor](https://cursor.com) 任选一个，装好并登录 |
+| **一个 Gemini API Key**（免费，用来配音） | 用 Google 账号登录 [Google AI Studio](https://aistudio.google.com/apikey)，点 **Create API key**，复制保存好 |
+
+电脑需要是 Mac 或 Linux（暂不支持 Windows），并装有 [Node.js](https://nodejs.org)（18 或更新）。没装也没关系，助手检查到会告诉你怎么装。
+
+### 第 2 步：把一句话发给 AI 编程助手
+
+在电脑上新建一个空文件夹（比如「视频工作室」），用 AI 编程助手打开它，复制下面这句话发给它，把尖括号换成你的文章：
+
+```text
+帮我下载并安装 https://github.com/clarkzoe2026-a11y/article-to-video ，然后按它的 WORKFLOW.md 流程，把这篇文章做成视频：<文章链接或 .md 文件路径>
+```
+
+助手会自己下载、安装（首次几分钟，约占 3 GB 空间），然后开始做视频。中途有两件事要你亲手做：
+
+- **填 Gemini Key**：助手会请你在自己的「终端」里运行一条命令，把 Key 粘贴进去。**不要把 Key 发到对话里**，它只保存在你自己电脑上。
+- **允许联网**：抓文章、安装、配音都要联网。如果助手默认不让联网（比如 Codex 的默认安全模式），请在助手里允许联网。
+
+能用的文章：
+
+- **飞书文档**：图片最清晰（需先登录飞书官方命令行工具 `lark-cli`）
+- **微信公众号文章**
+- **其他网页文章**：个人博客、CSDN、少数派、GitHub Blog、Substack、Wikipedia 等，外文文章也可以
+- **本地 Markdown / 文本文件**：文中引用的图片会一起导入。知乎、Medium 这类不让自动访问或要登录的网站，把文章另存为 Markdown 再用
+
+以后再做新视频，用 AI 编程助手打开 `article-to-video` 文件夹，发这句就行：
+
+```text
+按 WORKFLOW.md 的流程，把这篇文章做成视频：<文章链接或 .md 文件路径>
+```
+
+### 第 3 步：在三道关卡点头
+
+助手会自己一步步做下去，只在三个地方停下来等你：
+
+| 关卡 | 你要做的 |
+|---|---|
+| ① 口播脚本 | 读一遍稿子，回复「通过」，或者告诉它哪句要改 |
+| ② 配音 | 先听 1 分钟试听，再听完整配音，满意就回复「通过」 |
+| ③ 成片 | 看缩略图墙和完整视频，满意就回复「通过」 |
+
+做好的视频在 `articles/<文章目录>/out/video.mp4`。
+
+<details>
+<summary><b>想自己手动安装？</b>（点开）</summary>
+
+先装好 [Node.js](https://nodejs.org)（18 或更新）和 [uv](https://docs.astral.sh/uv/)（在「终端」里运行 `curl -LsSf https://astral.sh/uv/install.sh | sh`），然后一行一行运行：
+
+```bash
+git clone https://github.com/clarkzoe2026-a11y/article-to-video.git
+cd article-to-video
+./install.sh
+```
+
+安装过程中会请你粘贴 Gemini Key（粘贴时屏幕上不显示，粘完按回车），再填片尾要显示的公众号或频道名。第一次用 `git` 时，Mac 会弹窗提示安装开发者工具，点「安装」，装完再运行一次。
+
+占用空间约 3 GB：渲染引擎约 0.5 GB、Python 环境约 1 GB；第一次生成配音时，还会自动下载约 1.3 GB 的中文语音对齐模型（只下载一次）。它负责算出每个字在第几秒，让画面逐字跟着口播走，全部在本机运行。
+
+</details>
+
 ## 它能做什么
 
 - **双人对话口播**：主讲（女声）+ 提问（男声），提问者替观众问出卡点；用 Gemini TTS 免费版，整片配音一次生成。
@@ -25,37 +91,13 @@ https://github.com/user-attachments/assets/5d34f792-62aa-4bdd-bc87-736896126135
 - **三道人工关卡**：脚本、配音、成片都由你确认了再往下走；哪里不对当场改，不用推倒重来。
 - **自动质检**：黑帧扫描（有就自动重渲）、配音切点检查、每个画面抽帧拼成缩略图墙，交给你之前先自检。
 
-## 一键安装
+## 它是怎么做的（5 步）
 
-需要：macOS 或 Linux、Node.js 18+、[uv](https://docs.astral.sh/uv/)（推荐）或 Python 3.10–3.12、一个 [Gemini API Key](https://aistudio.google.com/apikey)（免费）。
-
-```bash
-git clone https://github.com/clarkzoe2026-a11y/article-to-video.git
-cd article-to-video
-./install.sh
-```
-
-`install.sh` 会装好渲染引擎（约 0.5 GB）、Python 环境（PyTorch + WhisperX，约 1 GB）、分句数据，并引导你填 Gemini Key 和片尾显示的公众号名。可重复运行。第一次生成配音时，还会自动下载约 1.3 GB 的中文语音对齐模型（只下载一次）——它负责算出每个字在第几秒，让画面逐字跟着口播走，全部在本机运行。合计约 3 GB 磁盘空间。
-
-## 5 步，文章变视频
-
-**最简单的用法**：装好后，在项目文件夹里打开你的 AI 编程助手（Claude Code、Codex、Cursor……），复制下面这句话发给它，把尖括号换成你的文章：
-
-```text
-按 WORKFLOW.md 的流程，把这篇文章做成视频：<文章链接或 .md 文件路径>
-```
-
-它会自己新建文章目录、抓取文章，然后按下面 5 步走，在三道关卡停下来等你确认。抓文章和配音都要联网：如果助手默认禁止联网（比如 Codex 的默认安全模式），请在助手里允许联网。
-
-1. **抓取文章**（`./a2v fetch`）：正文和截图一起拿下来。支持：
-   - **飞书文档**：图片最清晰（需先登录飞书官方命令行工具 `lark-cli`）
-   - **微信公众号文章**
-   - **其他网页文章**：个人博客、CSDN、少数派、GitHub Blog、Substack、Wikipedia 等，外文文章也可以
-   - **本地 Markdown / 文本文件**：文中引用的图片会一起导入。知乎、Medium 这类拒绝自动访问或需要登录的网站，把文章另存为 Markdown 再导入
-2. **口播脚本**：把文章改写成两个人的对话 → **你审稿**（关卡 1）。
-3. **生成配音**（`./a2v voice`）：先听 1 分钟试听段，再整段对话一次配好 → **你听整片**（关卡 2）。
+1. **抓取文章**（`./a2v fetch`）：正文和截图一起拿下来。
+2. **口播脚本**：把文章改写成两个人的对话 → 关卡 ①。
+3. **生成配音**（`./a2v voice`）：先出 1 分钟试听段，再整段对话一次配好 → 关卡 ②。
 4. **安排画面**（`./a2v shots`）：讲到哪张截图，就推近哪个红框。
-5. **渲染成片**（`./a2v render`）：自动检查，一条命令出片 → **你看成片**（关卡 3）。
+5. **渲染成片**（`./a2v render`）：自动检查，一条命令出片 → 关卡 ③。
 
 另外还能生成视频平台的分段章节（`./a2v chapters`）。
 

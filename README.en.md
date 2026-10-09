@@ -16,6 +16,72 @@ https://github.com/user-attachments/assets/5d34f792-62aa-4bdd-bc87-736896126135
 >
 > 📺 A full 14-minute video made with it: [Moving an AI-built website onto your own server, step by step (WeChat Channels, in Chinese)](https://weixin.qq.com/sph/AyngTzgEvD)
 
+## Quick start: 3 steps
+
+### Step 1: get two things
+
+| You need | How to get it |
+|---|---|
+| **An AI coding assistant** | Any of [Claude Code](https://claude.com/claude-code), [Codex](https://github.com/openai/codex), [Cursor](https://cursor.com) — installed and signed in |
+| **A Gemini API key** (free, for the voice) | Sign in to [Google AI Studio](https://aistudio.google.com/apikey) with a Google account, click **Create API key**, and keep it somewhere safe |
+
+You'll need a Mac or Linux computer (Windows isn't supported yet) with [Node.js](https://nodejs.org) 18 or newer. If it's missing, the assistant will tell you how to install it.
+
+### Step 2: send one line to your AI coding assistant
+
+Create an empty folder (e.g. "video-studio"), open it in your AI coding assistant, then copy this line, put your article in the angle brackets, and send it:
+
+```text
+Download and install https://github.com/clarkzoe2026-a11y/article-to-video, then follow its WORKFLOW.md to turn this article into a video: <article URL or path to a .md file>
+```
+
+The assistant downloads and installs everything (a few minutes the first time, about 3 GB of disk) and starts making the video. Two things it will ask you to do yourself:
+
+- **Enter your Gemini key**: it asks you to run one command in your own Terminal and paste the key there. **Don't paste the key into the chat** — it stays only on your computer.
+- **Allow internet access**: fetching, installing and voice generation need the network. If your assistant blocks it by default (e.g. Codex's default sandbox), allow it.
+
+Articles you can use:
+
+- **Feishu (Lark) docs**: sharpest images (log in with Feishu's official CLI `lark-cli` first)
+- **WeChat Official Account articles**
+- **Other web articles**: personal blogs, GitHub Blog, Substack, Wikipedia, dev.to, CSDN, Sspai… (any language)
+- **Local Markdown / text files**, with the images they reference. For sites that block automated access or need a login (e.g. Medium, Zhihu), save the article as Markdown and use that
+
+Next time, just open the `article-to-video` folder in your assistant and send:
+
+```text
+Follow WORKFLOW.md and turn this article into a video: <article URL or path to a .md file>
+```
+
+### Step 3: approve at three gates
+
+The assistant works through the steps by itself and only stops at three points for you:
+
+| Gate | What you do |
+|---|---|
+| ① Script | Read it, reply "approved", or say which lines to change |
+| ② Voice | Listen to a 1-minute sample, then the full narration; reply "approved" when happy |
+| ③ Video | Check the contact sheet and the full video; reply "approved" when happy |
+
+Your video ends up in `articles/<article folder>/out/video.mp4`.
+
+<details>
+<summary><b>Prefer to install it yourself?</b> (click to expand)</summary>
+
+Install [Node.js](https://nodejs.org) (18+) and [uv](https://docs.astral.sh/uv/) (run `curl -LsSf https://astral.sh/uv/install.sh | sh` in Terminal), then run these lines one at a time:
+
+```bash
+git clone https://github.com/clarkzoe2026-a11y/article-to-video.git
+cd article-to-video
+./install.sh
+```
+
+The installer asks you to paste your Gemini key (nothing shows while you paste — just press Enter) and the account name for the end card. The first time you use `git`, macOS offers to install its developer tools — click Install, then run the line again.
+
+About 3 GB of disk: render engine ~0.5 GB, Python environment ~1 GB, plus a Chinese speech-alignment model (~1.3 GB) downloaded automatically the first time you generate a voice. It works out the timing of every character so the picture follows the narration — entirely on your machine.
+
+</details>
+
 ## What it does
 
 - **Two-voice dialogue narration**: a presenter (female) and a questioner (male) who asks the questions your viewers would ask. Uses the Gemini TTS free tier; the whole narration is generated in one call.
@@ -25,37 +91,13 @@ https://github.com/user-attachments/assets/5d34f792-62aa-4bdd-bc87-736896126135
 - **Three human review gates**: you approve the script, the voice and the final video before moving on; fix anything on the spot instead of starting over.
 - **Automatic QA**: black-frame scan (with automatic re-render), narration cut-point checks, and a contact sheet of every shot — checked before it reaches you.
 
-## Install
+## How it works (5 steps)
 
-Requirements: macOS or Linux, Node.js 18+, [uv](https://docs.astral.sh/uv/) (recommended) or Python 3.10–3.12, and a free [Gemini API key](https://aistudio.google.com/apikey).
-
-```bash
-git clone https://github.com/clarkzoe2026-a11y/article-to-video.git
-cd article-to-video
-./install.sh
-```
-
-`install.sh` installs the render engine (about 0.5 GB), the Python environment (PyTorch + WhisperX, about 1 GB) and sentence-splitting data, then asks for your Gemini key and the account name shown on the end card. Safe to re-run. The first time you generate a voice, it also downloads a Chinese speech-alignment model (about 1.3 GB, once) — it works out the timing of every character so the picture can follow the narration, entirely on your machine. About 3 GB of disk in total.
-
-## 5 steps from article to video
-
-**The easy way**: after installing, open your AI coding assistant (Claude Code, Codex, Cursor, …) in the project folder and send it this line, with your article in the angle brackets:
-
-```text
-Follow WORKFLOW.md and turn this article into a video: <article URL or path to a .md file>
-```
-
-It creates the article folder, fetches the article, then walks through the 5 steps below and stops at the three review gates for you. Fetching and voice generation need internet access — if your assistant blocks the network by default (e.g. Codex's default sandbox), allow it.
-
-1. **Fetch the article** (`./a2v fetch`): text and screenshots, downloaded together. Sources:
-   - **Feishu (Lark) docs**: sharpest images (log in with Feishu's official CLI `lark-cli` first)
-   - **WeChat Official Account articles**
-   - **Other web articles**: personal blogs, GitHub Blog, Substack, Wikipedia, dev.to, CSDN, Sspai…
-   - **Local Markdown / text files**, with the images they reference. For sites that block automated access or need a login (e.g. Medium, Zhihu), save the article as Markdown and import that.
-2. **Write the script**: the article rewritten as a two-person dialogue → **you review it** (gate 1).
-3. **Generate the voice** (`./a2v voice`): listen to a 1-minute sample, then the full dialogue is voiced in one go → **you listen to it** (gate 2).
+1. **Fetch the article** (`./a2v fetch`): text and screenshots, downloaded together.
+2. **Write the script**: the article rewritten as a two-person dialogue → gate ①.
+3. **Generate the voice** (`./a2v voice`): a 1-minute sample first, then the full dialogue voiced in one go → gate ②.
 4. **Arrange the shots** (`./a2v shots`): whichever screenshot is being discussed, zoom into its red box.
-5. **Render** (`./a2v render`): automatic checks, one command to the final video → **you watch it** (gate 3).
+5. **Render** (`./a2v render`): automatic checks, one command to the final video → gate ③.
 
 It can also generate chapter markers for video platforms (`./a2v chapters`).
 

@@ -37,6 +37,19 @@
 | 浏览器 | 有本机 Google Chrome 就用它渲染；没有时 Remotion 会自动下载自带浏览器（也可用 `A2V_CHROME` 指定） |
 | 飞书原图（可选） | `lark-cli`，**只申请只读权限**（见 `pipeline/fetch_article.py` 顶部），用完 `lark-cli auth logout` |
 
+### 第一次使用：Agent 检查环境并自动安装
+
+用户可能只发了一句「帮我下载并安装 <本仓库地址>，然后……把这篇文章做成视频」。按顺序做：
+
+1. **下载**：当前目录还没有本项目时，`git clone` 本仓库并进入目录（macOS 第一次用 git 会弹窗装开发者工具，请用户点「安装」后再试）。
+2. **检查**：`node -v`（需 18+）、有没有 `uv`（或 Python 3.10–3.12）、`.venv/bin/python`、`engine/node_modules`、`.env` 里有没有非空的 `GEMINI_API_KEY`（只判断有无，**不打印**）。
+3. **缺 Node.js**：请用户到 https://nodejs.org 下载安装包（已有 Homebrew 的可以 `brew install node`）；不要用 `sudo`，也不要替用户输入电脑密码。
+4. **缺 uv 且没有合适的 Python**：可以运行官方脚本 `curl -LsSf https://astral.sh/uv/install.sh | sh`（装在用户目录，不需要密码），装完用 `~/.local/bin/uv` 或重开终端。
+5. **安装**：运行 `./install.sh`。在 Agent 的非交互终端里它会跳过 Key 和公众号名的提问，其余照常安装（首次几分钟）。
+6. **Gemini Key**：**不要让用户把 Key 发到对话里**（对话会被保存）。请用户在自己的终端里进入项目目录运行 `./install.sh`——已装好的部分会跳过，只问 Key 和片尾公众号名；或者用文本编辑器打开 `.env` 写一行 `GEMINI_API_KEY=…`。没有 Key 的用户先去 https://aistudio.google.com/apikey 免费申请。
+7. **联网**：抓文章、装依赖、配音都要联网；被助手的安全模式拦住时，请用户在助手里允许联网。
+8. 装好后从「1. 抓取素材」开始。
+
 ## 1. 抓取素材（Agent 自动）
 
 ```bash

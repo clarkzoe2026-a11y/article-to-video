@@ -54,19 +54,18 @@ if [ ! -s .env ] || ! grep -q '^GEMINI_API_KEY=.' .env; then
     read -r -s -p "Gemini API Key（https://aistudio.google.com/apikey；直接回车可稍后再填）: " k; echo
     if [ -n "$k" ]; then umask 077; printf 'GEMINI_API_KEY=%s\n' "$k" > .env; echo ".env 已保存（仅本机，不会提交）"; fi
   else
-    echo "跳过：请稍后 cp .env.example .env 并填入 Key"
+    echo "还没填 Gemini Key：请在你自己的终端里进入本目录运行 ./install.sh（已装好的会跳过，只问 Key），不要把 Key 发到 AI 对话里"
   fi
 else
   echo ".env 已存在 ✓"
 fi
-if [ ! -f brand/brand.json ]; then
-  cp brand/brand.example.json brand/brand.json
-  if [ -t 0 ]; then
-    read -r -p "片尾显示的公众号 / 频道名（回车跳过）: " acc
-    [ -n "$acc" ] && .venv/bin/python -c "import json,sys;p='brand/brand.json';d=json.load(open(p));d['account']=sys.argv[1];json.dump(d,open(p,'w'),ensure_ascii=False,indent=2)" "$acc"
-  fi
-  echo "品牌信息在 brand/brand.json；二维码放 brand/qr.jpg（可选）"
+[ -f brand/brand.json ] || cp brand/brand.example.json brand/brand.json
+# 公众号名还没填（空或示例占位文字）时才问；AI 助手的非交互终端里跳过，用户之后在自己终端重跑 ./install.sh 再填
+if [ -t 0 ] && .venv/bin/python -c "import json,sys;a=json.load(open('brand/brand.json'))['account'];sys.exit(0 if (not a or '（' in a) else 1)"; then
+  read -r -p "片尾显示的公众号 / 频道名（回车跳过）: " acc
+  [ -n "$acc" ] && .venv/bin/python -c "import json,sys;p='brand/brand.json';d=json.load(open(p));d['account']=sys.argv[1];json.dump(d,open(p,'w'),ensure_ascii=False,indent=2)" "$acc"
 fi
+echo "品牌信息在 brand/brand.json；二维码放 brand/qr.jpg（可选）"
 
 say "安装完成 🎉"
 cat <<'MSG'
